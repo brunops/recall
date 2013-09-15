@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= @title + " | Recall" %></title>
+  <link rel="stylesheet" href="/reset.css">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <hgroup>
+      <h1><a href="/">Recall</a></h1>
+      <h2>'cause you're too busy to remember</h2>
+    </hgroup>
+  </header>
+
+  <div id="main">
+    <%= yield %>
+  </div>
+
+  <footer>
+    <p><small>An app by <a href="http://brunops.org">brunops</a>.</small></p>
+  </footer>
+</body>
+</html>
