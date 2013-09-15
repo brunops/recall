@@ -31,6 +31,6 @@ end
 
 get '/:id' do
   @note = Note.get params[:id]
-  @title = "Edit note ##{note.id}"
+  @title = "Edit note ##{@note.id}"
   erb :edit
 end
