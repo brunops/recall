@@ -9,7 +9,7 @@
   <article <%= 'class="complete"' if note.completed %>>
     <p>
       <%= note.content %>
-      <span><a href="/<%= note.id %>"></a></span>
+      <span><a href="/<%= note.id %>">[edit]</a></span>
     </p>
     <p class="links"><a href="/<%= note.id %>/complete">&#8623;</a></p>
     <p class="meta">Created at: <%= note.created_at %></p>
