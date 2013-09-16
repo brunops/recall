@@ -54,37 +54,62 @@ end
 
 get '/:id' do
   @note = Note.get params[:id]
-  @title = "Edit note ##{@note.id}"
-  erb :edit
+  if @note
+    @title = "Edit note ##{@note.id}"
+    erb :edit
+  else
+    redirect '/', :error => "Can't find that note."
+  end
 end
 
 put '/:id' do
   n = Note.get params[:id]
+  unless n
+    redirect '/', :error => "Can't find that note."
+  end
   n.content = params[:content]
   n.completed = params[:completed] ? 1 : 0
   n.updated_at = Time.now
-  n.save
+  if n.save
+    redirect '/', :notice => "Note updated successfully."
+  else
+    redirect '/', :error => "Error updating note."
+  end
   redirect '/'
 end
 
 get '/:id/delete' do
   @note = Note.get params[:id]
   @title = "Confirm deletion of note ##{params[:id]}"
-  erb :delete
+  if @note
+    erb :delete
+  else
+    redirect '/', :error => "Can't find that note."
+  end
 end
 
 
 delete '/:id' do
   n = Note.get params[:id]
-  n.destroy
-  redirect '/'
+  if n.destroy
+    redirect '/', :notice => 'Note deleted successfully.'
+  else
+    redirect '/', :error => 'Error deleting note.'
+  end
 end
 
 get '/:id/complete' do
   n = Note.get params[:id]
+  unless n
+    redirect '/', :error => "Can't find that note."
+  end
   n.completed = n.completed ? 0 : 1 # flip it
   n.updated_at = Time.now
-  n.save
+  if n.save
+    redirect '/', :notice => "Note marked as completed."
+  else
+    redirect '/', :error => "Error marking note as completed."
+  end
   redirect '/'
 end
 
