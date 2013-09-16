@@ -1,6 +1,9 @@
 require 'sinatra'
 require 'data_mapper'
 
+SITE_TITLE = "Recall"
+SITE_DESCRIPTION = "'cause you're too busy to remember"
+
 DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/recall.db")
 
 class Note
@@ -34,6 +37,11 @@ post '/' do
   redirect '/'
 end
 
+get '/rss.xml' do
+  @notes = Note.all :order => :id.desc
+  builder :rss
+end
+
 get '/:id' do
   @note = Note.get params[:id]
   @title = "Edit note ##{@note.id}"
@@ -55,6 +63,7 @@ get '/:id/delete' do
   erb :delete
 end
 
+
 delete '/:id' do
   n = Note.get params[:id]
   n.destroy
@@ -68,6 +77,10 @@ get '/:id/complete' do
   n.save
   redirect '/'
 end
+
+
+
+
 
 
 

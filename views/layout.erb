@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title><%= @title + " | Recall" %></title>
+  <title><%= "#{@title} | #{SITE_TITLE}" %></title>
+  <link rel="alternate" href="/rss.xml" type="application/rss+xml">
   <link rel="stylesheet" href="/reset.css">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <header>
     <hgroup>
-      <h1><a href="/">Recall</a></h1>
-      <h2>'cause you're too busy to remember</h2>
+      <h1><a href="/"><%= SITE_TITLE %></a></h1>
+      <h2><%= SITE_DESCRIPTION %></h2>
     </hgroup>
   </header>
 
