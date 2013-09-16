@@ -1,5 +1,9 @@
-require 'sinatra'
 require 'data_mapper'
+require 'sinatra'
+require 'sinatra/flash'
+require 'sinatra/redirect_with_flash'
+
+enable :sessions
 
 SITE_TITLE = "Recall"
 SITE_DESCRIPTION = "'cause you're too busy to remember"
@@ -25,6 +29,9 @@ end
 get '/' do
   @notes = Note.all :order => :id.desc
   @title = 'All Notes'
+  if @notes.empty?
+    flash[:error] = 'No notes found. Add your first below.'
+  end
   erb :home
 end
 
@@ -33,8 +40,11 @@ post '/' do
   n.content = params[:content]
   n.created_at = Time.now
   n.updated_at = Time.now
-  n.save
-  redirect '/'
+  if n.save
+    redirect '/', :notice => 'Note created sucessfully.'
+  else
+    redirect '/', :error => 'Failed to save note.'
+  end
 end
 
 get '/rss.xml' do
