@@ -56,5 +56,13 @@ delete '/:id' do
   redirect '/'
 end
 
+get '/:id/<complete></complete>' do
+  n = Note.get params[:id]
+  n.completed = n.completed ? 0 : 1 # flip it
+  n.updated_at = Time.now
+  n.save
+  redirect '/'
+end
+
 
 
